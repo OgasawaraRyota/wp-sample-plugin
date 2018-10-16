@@ -1,0 +1,2 @@
+# wp-sample-plugin
+WordPressプラグイン
