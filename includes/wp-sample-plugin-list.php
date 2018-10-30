@@ -6,7 +6,7 @@
  * @version 1.0.0
  * @since   1.0.0
  */
-class Sample_Plugin_List{
+class Sample_Plugin_List {
 	/**
 	 * Constructor
 	 *
