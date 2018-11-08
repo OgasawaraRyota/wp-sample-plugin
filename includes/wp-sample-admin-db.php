@@ -36,7 +36,7 @@ class Sample_Plugin_Admin_Db {
 			 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 
-			 $query  = "CREATE TABLE wp_sample_post (";
+			 $query  = "CREATE TABLE " . $this->table_name . " (";
 			 $query .= "id MEDIUMINT(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,";
 			 $query .= "image_url TEXT NOT NULL,";
 			 $query .= "image_alt TEXT,";
