@@ -30,8 +30,8 @@ class Sample_Plugin {
 	 *@since   1.0.0
 	 */
 public function create_table() {
-$db = new Sample_Plugin_Admin_Db();
-$db->create_table();
+	$db = new Sample_Plugin_Admin_Db();
+	$db->create_table();
 }
 
 	/**

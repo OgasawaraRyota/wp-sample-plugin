@@ -67,7 +67,6 @@ class Sample_Plugin_Admin_Db {
 			 dbDelta( $query );
 		 }
 	 }
-
 	 /**
 		* Constructor
 		*
