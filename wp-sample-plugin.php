@@ -8,6 +8,7 @@ Author: Ryota Ogasawara
 Author URI: https://github.com/OgasawaraRyota/wp-sample-plugin
 License: GPLv2 or later
 */
+require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-sample-admin-db.php');
 new Sample_Plugin();
 class Sample_Plugin {
 	/**
@@ -29,7 +30,6 @@ class Sample_Plugin {
 	 *@since   1.0.0
 	 */
 public function create_table() {
-require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-sample-admin-db.php');
 $db = new Sample_Plugin_Admin_Db();
 $db->create_table();
 }
