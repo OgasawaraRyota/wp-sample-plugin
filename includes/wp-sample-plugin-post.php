@@ -44,7 +44,13 @@ class Sample_Plugin_post {
 		 $html.='<tr>';
 		 $html.='<th>画像の　URL(必須）</th>';
 		 $html.='<td>';
-		 $html.='<img id="banner-image-view" src=' . plugins_url('../images/no-image.png', __FILE__) . ' width="200">';
+
+		 if( isset( $args->image_url ) ) {
+			 $image_src = $args->image_url;
+		 }else {
+			 $image_src = plugins_url('../images/no-image' , __FILE__ );
+		 }
+		 $html.='<img id="banner-image-view" src=' . $image_src . ' width="200">';
 		 $html.='<input id="banner-image-url" type="text" class="large-text" name="sample-image-url" required value="'. $args->image_url.'">';
 		 $html.='<button id="media-upload" class="button">画像を選択</button>';
 		 $html.='</td>';
@@ -64,18 +70,24 @@ class Sample_Plugin_post {
 
 		 $html.='<tr>';
 		 $html.='<th>新規タブで開く</th>';
-		 $html.='<td><input type="checkbox" name="sample-image-target">リンクを新規タブで開く</td>';
+
+		 if( $args->open_new_tab === "1" ) {
+			 $open_new_tab_checked = 'checked';
+		 }else {
+			 $open_new_tab_checked = '';
+		 }
+		 $html.='<td><input type="checkbox" name="sample-image-target" value="1" '. $open_new_tab_checked .'>リンクを新規タブで開く</td>';
 		 $html.='</tr>';
 
 		 $html.='<tr>';
 		 $html.='<th>Class名</th>';
-		 $html.='<td><input type="text" class="regular-text" name="sample-element-class">';
+		 $html.='<td><input type="text" class="regular-text" name="sample-element-class" value="' . $args->insert_element_class . '">';
 		 $html.='<p class="description">バナー画像にクラス（複数可）を追加することができます。「class=""」は不要です。複数設定する場合は、半角スペースで区切ります。</p></td>';
 		 $html.='</tr>';
 
 		 $html.='<tr>';
 		 $html.='<th>ID名</th>';
-		 $html.='<td><input type="text" class="regular-text" name="sample-element-id">';
+		 $html.='<td><input type="text" class="regular-text" name="sample-element-id" value="' . $args->insert_element_id . '">';
 		 $html.='<p class="description">バナー画像にIDを追加することができます。「id=""」は不要です。</p></td>';
 		 $html.='</tr>';
 		 $html.='</table>';
@@ -85,13 +97,33 @@ class Sample_Plugin_post {
 
 		 $html.='<tr>';
 		 $html.='<th>表示方法(必須)</th>';
-		 $html.='<td><input type="radio" name="sample-how-display" value="post_bottom">記事の下に表示<br>';
-		 $html.='<input type="radio" name="sample-how-display" value="shortcode">ショートコードで表示</td>';
+		 $html.='<td>';
+
+		 $how_display_checked = array('','');
+		 switch( $args->how_display) {
+			 case 'post_bottom':
+			 	 $how_display_post[0] = 'checked';
+			 	break;
+			 case 'shortcode':
+			 	 $how_display_shortcode[1] = 'checked';
+			 	break;
+			 default:
+			 	break;
+		 }
+		 $html.='<input type="radio" name="sample-how-display" value="post_bottom" '. $how_display_post[0] .'>記事の下に表示<br>';
+		 $html.='<input type="radio" name="sample-how-display" value="shortcode"' . $how_display_shortcode[1] . '>ショートコードで表示</td>';
 		 $html.='</tr>';
 
 		 $html.='<tr>';
 		 $html.='<th>絞り込み</th>';
-		 $html.='<td><input type="checkbox" name="sample-filter-category">カテゴリーで絞り込み';
+		 $html.='<td>';
+
+		 if( $args->filter_category === "1" ) {
+			$filter_category_checked = 'checked';
+		}else {
+			$filter_category_checked = '';
+		}
+		 $html.='<input type="checkbox" name="sample-filter-category"　value="1"' .$filter_category_checked. '>カテゴリーで絞り込み';
 		 $html.='<p class="description">チェックされていない場合は、すべてに無条件で表示され、「表示するカテゴリ」項目の設定は無視されます。</p></td>';
 		 $html.='</tr>';
 
@@ -101,13 +133,15 @@ class Sample_Plugin_post {
 
 		 echo $html;
 
-		 $args = array(
+		 $param = array(
 			 'name'         => 'sample-display-category',
-			 'hierarchical' => 1
+			 'hierarchical' => 1,
+			 'selected'     => $args->category_id
 		 );
-		 wp_dropdown_categories( $args );
+		 wp_dropdown_categories( $param );
 
-		 $html ='<p class="description">選択したカテゴリーが投稿に紐づいている場合のみ画像が表示されます。</p></td>';
+		 $html ='<p class="description">選択したカテゴリーが投稿に紐づいている場合のみ画像が表示されます。</p>';
+		 $html ='</td>';
 		 $html.='</tr>';
 
 		 $html.='</table>';
