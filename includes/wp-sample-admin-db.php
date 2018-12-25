@@ -33,7 +33,7 @@ class Sample_Plugin_Admin_Db {
 		 $query    = 'SELECT * FROM ' . $this->table_name . ' WHERE id = %d';
 		 $data     = array( $id );
 		 $prepared = $wpdb->prepare( $query, $data );
-		 return $wpdb->get_row( $prepared );
+		 return (array) $wpdb->get_row( $prepared );
 	 }
 
 	/**
@@ -86,7 +86,7 @@ class Sample_Plugin_Admin_Db {
 	 }
 
 	 /**
-		* Insert post
+		* Insert options
 		*
 		* @version 1.0.0
 		* @since   1.0.0
@@ -97,13 +97,13 @@ class Sample_Plugin_Admin_Db {
 			$data = array(
 				'image_url'            => $post['sample-image-url'],
 				'image_alt'            => $post['sample-image-alt'],
-				'link_url'             => $post['sample-link-url'],
+				'link_url'             => $post['sample-image-link'],
 				'open_new_tab'         => isset( $post['sample-open_new_tab'] ) ? 1 : 0,
-				'insert_element_class' => $post['sample-insert_element_class'],
-				'insert_element_id'    => $post['sample-insert_element_id'],
-				'how_display'          => $post['sample-how_display'],
+				'insert_element_class' => $post['sample-element-class'],
+				'insert_element_id'    => $post['sample-element-id'],
+				'how_display'          => $post['sample-how-display'],
 				'filter_category_id'   => isset($post['sample-filter_category_id'])? 1 : 0,
-				'category_id'          => $post['sample-category_id'],
+				'category_id'          => $post['sample-display-category'],
 				'register_date'        => date( 'Y-m-d H:i:s' ),
 				'update_date'          => date( 'Y-m-d H:i:s' )
 			);
